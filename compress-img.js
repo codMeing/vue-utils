@@ -10,13 +10,13 @@ export default function compressImg(file = null, opts) {
     let Orientation = '';
     // 定义默认配置参数
     let options = {
-        outputType: 'base64',               // 导出格式，默认以base64格式导出，可取值：'base64' || 'blob'
-        quality: 0.7,                       // 压缩质量，取值范围(0, 1]
-        type: 'png',                        // 图片导出格式，默认'png'
-        maxDefaultSize: 10,                 // 压缩后的最大值限制，默认10M，压缩后还超过该值，则报错
-        maxWidth: 1200,                     // 压缩后图片最大宽度
-        maxHeight: 900,                     // 压缩后图片最大高度
-        autoOrientation: true               // 是否自动纠正图片旋转角度
+        outputType: 'base64', // 导出格式，默认以base64格式导出，可取值：'base64' || 'blob'
+        quality: 0.7, // 压缩质量，取值范围(0, 1]
+        type: 'png', // 图片导出格式，默认'png'
+        maxDefaultSize: 10, // 压缩后的最大值限制，默认10M，压缩后还超过该值，则报错
+        maxWidth: 1200, // 压缩后图片最大宽度
+        maxHeight: 900, // 压缩后图片最大高度
+        autoOrientation: true, // 是否自动纠正图片旋转角度
     };
     options = Object.assign({}, options, opts);
 
@@ -36,13 +36,13 @@ export default function compressImg(file = null, opts) {
 
     // 选择的文件是图片
     if (file.type.indexOf('image') === 0) {
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
     } else {
         console.error('请选择图片文件进行压缩！');
         return false;
     }
     // 文件base64化，以便获知图片原始尺寸
-    reader.onload = function (e) {
+    reader.onload = function(e) {
         imgSize = e.total;
         img.src = e.target.result;
     };
@@ -54,7 +54,7 @@ export default function compressImg(file = null, opts) {
     // 返回promise对象
     return new Promise((resolve, reject) => {
         // base64地址图片加载完毕后
-        img.onload = (e) => {
+        img.onload = e => {
             // 图片原始尺寸
             let originWidth = img.width;
             let originHeight = img.height;
@@ -90,17 +90,17 @@ export default function compressImg(file = null, opts) {
                         canvas.width = height;
                         canvas.height = width;
                         context.rotate((90 * Math.PI) / 180);
-                        context.drawImage(img,0,0, width, -height);
+                        context.drawImage(img, 0, 0, width, -height);
                         break;
                     case 8: //需要逆时针90度旋转
                         canvas.width = height;
                         canvas.height = width;
                         context.rotate((-90 * Math.PI) / 180);
-                        context.drawImage(img, 0,0,-width, height);
+                        context.drawImage(img, 0, 0, -width, height);
                         break;
                     case 3: //需要180度旋转
                         context.rotate((180 * Math.PI) / 180);
-                        context.drawImage(img,0,0, -width, -height);
+                        context.drawImage(img, 0, 0, -width, -height);
                         break;
                 }
             }
@@ -122,7 +122,7 @@ export default function compressImg(file = null, opts) {
             } else if (options.outputType === 'blob') {
                 prefillToBlob();
                 // canvas转为blob上传
-                canvas.toBlob((blob) => {
+                canvas.toBlob(blob => {
                     resolve(blob);
                 }, `image/${options.type}` || file.type || 'image/jpeg');
             }
@@ -138,18 +138,17 @@ export default function compressImg(file = null, opts) {
 function prefillToBlob() {
     if (!HTMLCanvasElement.prototype.toBlob) {
         Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
-            value (callback, type, quality) {
-
-                var binStr = atob( this.toDataURL(type, quality).split(',')[1] ),
+            value(callback, type, quality) {
+                var binStr = atob(this.toDataURL(type, quality).split(',')[1]),
                     len = binStr.length,
                     arr = new Uint8Array(len);
 
-                for (var i=0; i<len; i++ ) {
+                for (var i = 0; i < len; i++) {
                     arr[i] = binStr.charCodeAt(i);
                 }
 
-                callback( new Blob( [arr], {type: type || 'image/png'} ) );
-            }
+                callback(new Blob([arr], { type: type || 'image/png' }));
+            },
         });
     }
 }
