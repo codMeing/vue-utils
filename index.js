@@ -2,8 +2,10 @@ import compressImg from './compress-img';
 import deepClone from './deep-clone';
 import debounce from './debounce';
 import fillContainerWhenImgLoad from './fill-container-when-img-load';
+import { Validator } from './validator';
+import validata from './validata';
 
-const install = function(Vue, opts = {}) {
+const install = function (Vue, opts = {}) {
     Object.defineProperties(Vue.prototype, {
         $compressImg: {
             value: compressImg,
@@ -16,6 +18,12 @@ const install = function(Vue, opts = {}) {
         },
         $fillContainerWhenImgLoad: {
             value: fillContainerWhenImgLoad,
+        },
+        $validator: {
+            value: Validator,
+        },
+        $validata: {
+            value: validata,
         },
     });
 };
