@@ -1,4 +1,4 @@
-export const Validator = {
+export const validator = {
     isMobileTerminal: /Android|webOS|iPhone|iPod|BlackBerry/i, // 是否为移动端
     isEmail: /^[\.A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, // 校验邮箱
     isPhoneNumber: /^1[3456789]\d{9}$/, // 大陆手机号码验证-不含区号
