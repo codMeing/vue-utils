@@ -12,6 +12,17 @@ function distinct(arr, field) {
             return cur;
         }, []);
     } else {
-        return Array.from(new Set([...arr]));
+        if (Array.hasOwnProperty('from')) {
+            return Array.from(new Set([...arr]));
+        } else {
+            let n = {}, result = [];
+            for (let i = 0, l = arr.length; i < l; i++) {
+                if (!n[arr[i]]) {
+                    n[arr[i]] = true;
+                    result.push(arr[i]);
+                }
+            }
+            return result;
+        }
     }
 }
