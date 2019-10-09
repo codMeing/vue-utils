@@ -9,19 +9,17 @@ import distinct from './distinct';
 import * as type from './type';
 import sleep from './sleep';
 
+const utilsObj = Object.assign({}, { ...type }, { compressImg, deepClone, debounce, fillContainerWhenImgLoad, validator, validata, throttle, distinct, sleep, });
+
 const install = function (Vue, opts = {}) {
-    const utils = {
-        compressImg,
-        debounce,
-        deepClone,
-        fillContainerWhenImgLoad,
-        validator,
-        validata,
-        throttle,
-        distinct,
-        sleep,
-        type,
-    };
+    let utils = {}, temp = {};
+    for (let k in utilsObj) {
+        temp[k] = {
+            value: utilsObj[k],
+        };
+    }
+
+    Object.defineProperties(utils, temp);
     Object.defineProperties(Vue.prototype, {
         $qUtils: {
             value: utils,
