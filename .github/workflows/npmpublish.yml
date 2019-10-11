@@ -1,0 +1,34 @@
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: github config
+        run:
+          git config user.name "$(git --no-pager log --format=format:'%an' -n 1)" &&
+          git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+      - name: init data
+        id: data
+        run: echo ::set-output name=message::`git log -1 --pretty=%B`&&
+          ref="${{ github.ref	}}"&&
+          echo ::set-output name=branch::${ref#*refs/heads/}
+      - name: npm publish
+        if: steps.data.outputs.message == 'major' ||  steps.data.outputs.message == 'minor' || steps.data.outputs.message == 'patch'
+        run: npm version ${{ steps.data.outputs.message }} &&
+          npm publish &&
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${{github.repository}}.git" HEAD:${{steps.data.outputs.branch}}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}

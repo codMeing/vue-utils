@@ -1,6 +1,6 @@
 {
-    "name": "@conandsherry/vue-utils",
-    "version": "1.0.2",
+    "name": "@conandmobile/vue-utils",
+    "version": "1.0.3",
     "description": "",
     "main": "index.js\t",
     "scripts": {
@@ -8,12 +8,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ConandSherry/vue-utils.git"
+        "url": "git+https://github.com/conandmobile/vue-utils.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/ConandSherry/vue-utils/issues"
+        "url": "https://github.com/conandmobile/vue-utils/issues"
     },
-    "homepage": "https://github.com/ConandSherry/vue-utils#readme"
+    "homepage": "https://github.com/conandmobile/vue-utils#readme"
 }
