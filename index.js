@@ -8,8 +8,14 @@ import throttle from './throttle';
 import distinct from './distinct';
 import * as type from './type';
 import sleep from './sleep';
+import uuid from './uuid';
+import uploadFile from './upload-file';
 
-const utilsObj = Object.assign({}, { ...type }, { compressImg, deepClone, debounce, fillContainerWhenImgLoad, validator, validata, throttle, distinct, sleep, });
+const utilsObj = Object.assign(
+    {},
+    { ...type },
+    { compressImg, deepClone, debounce, fillContainerWhenImgLoad, validator, validata, throttle, distinct, sleep, uuid, uploadFile }
+);
 
 const install = function (Vue, opts = {}) {
     let utils = {}, temp = {};

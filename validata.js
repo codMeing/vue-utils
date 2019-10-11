@@ -35,7 +35,7 @@ function validataByRules(opts) {
         for (let i = 0, len = rules.length; i < len; i++) {
             let item = rules[i];
             if (!isRegExp(item.rule)) {
-                return new Error('校验规则必须为正则!');
+                throw new Error('校验规则必须为正则!');
             }
             if (!item.rule.test(value)) {
                 result.isInvalid = true;
@@ -47,6 +47,6 @@ function validataByRules(opts) {
 
         return result;
     } catch (error) {
-        return new Error('请确认校验规则是否为正则表达式!');
+        console.log(error);
     }
 }
